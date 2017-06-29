@@ -19,6 +19,7 @@ public class Board {
     
     UUID uuid;
     JSONObject data;
+    JSONArray playersList;
     
     /**
      * construct a new board
@@ -60,6 +61,11 @@ public class Board {
      * @throws FileNotFoundException
      * @throws UnsupportedEncodingException
      */
+    
+    public JSONArray getPlayersList(){
+    	playersList=data.getJSONArray("players");
+    	return playersList;
+    }
     public JSONArray registerPlayer(String name) 
             throws PlayerExistsException, GameInProgressException,
                 FileNotFoundException, UnsupportedEncodingException,
@@ -100,7 +106,7 @@ public class Board {
         for(int i = 0; i < data.getJSONArray("players").length(); i++){
             JSONObject player = data.getJSONArray("players").getJSONObject(i);
             
-            if(player.getString("uuid").equals(playerUuid.toString())){
+            if(player.get("uuid").toString().equals(playerUuid.toString())){
                 data.getJSONArray("players").remove(i);
                 data.put("turn", 0);
                 BoardModel.save(uuid, data);
@@ -191,4 +197,9 @@ public class Board {
     public UUID getUUID(){
         return uuid;
     }
+    
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, PlayerExistsException, GameInProgressException, MaxPlayersReachedExeption, IOException {
+		Board board =new Board();
+		System.out.println(board.registerPlayer("Paras"));
+	}
 }

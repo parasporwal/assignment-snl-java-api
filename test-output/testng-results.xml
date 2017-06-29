@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="2" total="3" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="73" started-at="2017-06-29T13:14:34Z" finished-at="2017-06-29T13:14:35Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="73" started-at="2017-06-29T13:14:34Z" finished-at="2017-06-29T13:14:35Z">
+      <class name="com.qainfotech.tap.training.snl.api.BoardTest">
+        <test-method status="PASS" signature="isPlayerRemoved()[pri:0, instance:com.qainfotech.tap.training.snl.api.BoardTest@5056dfcb]" name="isPlayerRemoved" duration-ms="55" started-at="2017-06-29T18:44:34Z" finished-at="2017-06-29T18:44:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- isPlayerRemoved -->
+      </class> <!-- com.qainfotech.tap.training.snl.api.BoardTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
