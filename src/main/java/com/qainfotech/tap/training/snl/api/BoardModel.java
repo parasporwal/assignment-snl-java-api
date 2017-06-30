@@ -50,6 +50,7 @@ public class BoardModel {
         writer.close();
     }
     
+ 
     public static void save(UUID uuid, JSONObject content)
             throws FileNotFoundException, UnsupportedEncodingException{
         PrintWriter writer = new PrintWriter(uuid.toString() + ".board", "UTF-8");

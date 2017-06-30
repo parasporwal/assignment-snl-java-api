@@ -66,6 +66,8 @@ public class Board {
     	playersList=data.getJSONArray("players");
     	return playersList;
     }
+    
+    
     public JSONArray registerPlayer(String name) 
             throws PlayerExistsException, GameInProgressException,
                 FileNotFoundException, UnsupportedEncodingException,
@@ -198,8 +200,8 @@ public class Board {
         return uuid;
     }
     
-    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, PlayerExistsException, GameInProgressException, MaxPlayersReachedExeption, IOException {
+   /* public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, PlayerExistsException, GameInProgressException, MaxPlayersReachedExeption, IOException {
 		Board board =new Board();
 		System.out.println(board.registerPlayer("Paras"));
-	}
+	}*/
 }
