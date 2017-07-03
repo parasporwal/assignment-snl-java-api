@@ -1,1 +1,6 @@
 /target/
+
+.board
+.classpath
+.project
+/test-output/

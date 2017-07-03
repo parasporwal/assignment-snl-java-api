@@ -131,7 +131,7 @@ public class Board {
      * @throws FileNotFoundException
      * @throws UnsupportedEncodingException
      */
-    public JSONObject rollDice(UUID playerUuid) 
+   public JSONObject rollDice(UUID playerUuid) 
             throws InvalidTurnException, FileNotFoundException,
                 UnsupportedEncodingException{
         JSONObject response = new JSONObject();
@@ -146,6 +146,7 @@ public class Board {
             String playerName = player.getString("name");
             if(newPosition <= 100){
                 JSONObject step = data.getJSONArray("steps").getJSONObject(newPosition);
+              
                 newPosition = step.getInt("target");
                 if(step.getInt("type")==0){
                     message = "Player moved to " + newPosition;
@@ -174,6 +175,22 @@ public class Board {
         }
         return response;
     }
+   
+   
+   public int getNumberAfterRollingDice(UUID playerUuid) {
+	   Integer dice = null;
+       JSONObject response = new JSONObject();
+       Integer turn = data.getInt("turn");
+       if(playerUuid.equals((UUID)data.getJSONArray("players").getJSONObject(turn).get("uuid"))){
+           JSONObject player = data.getJSONArray("players").getJSONObject(turn);
+           
+           dice = new Random().nextInt(6) + 1;
+           
+       }
+       return dice.intValue();
+   }
+  
+            
     
     /**
      * pretty print the UUID of board

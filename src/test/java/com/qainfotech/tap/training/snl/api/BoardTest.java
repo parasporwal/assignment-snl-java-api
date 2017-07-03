@@ -1,28 +1,26 @@
 package com.qainfotech.tap.training.snl.api;
 
 import static org.testng.Assert.assertEquals;
-
 import static org.testng.Assert.assertNotEquals;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.NoSuchFileException;
+import java.util.Random;
 import java.util.UUID;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.mockito.*;
 
 
 
 public class BoardTest {
 	
-	//UUID uuid;
 	
 	/**
 	 * validating maximun number of players
@@ -115,8 +113,7 @@ public class BoardTest {
 		System.out.println(players);
 		assertNotEquals(originalLength, players.length());
 	
-		//System.out.println(testBoard.getPlayersList().length());
-		//System.out.println(players);
+	
 		
 	}
 	
@@ -182,12 +179,171 @@ public class BoardTest {
 	}
 	
 	
+	/**
+	 * test whether it is valid turn for dice rolling to a player
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 * @throws IOException
+	 * @throws PlayerExistsException
+	 * @throws GameInProgressException
+	 * @throws MaxPlayersReachedExeption
+	 * @throws InvalidTurnException
+	 */
+	@Test(expectedExceptions=InvalidTurnException.class)
+	public void testValidTurn() throws FileNotFoundException, UnsupportedEncodingException, IOException, PlayerExistsException, GameInProgressException, MaxPlayersReachedExeption, InvalidTurnException{
+		JSONArray players = null;
+		Board testBoard=new Board();
+		for(int playerNO=0;playerNO<4;playerNO++){
+			players=testBoard.registerPlayer("player"+playerNO);
+		}	
+		
+			JSONObject player1=(JSONObject) players.get(0);
+			JSONObject player3=(JSONObject)players.get(2);
+			
+			UUID uuidOfPlayer1=UUID.fromString(player1.get("uuid").toString());
+			UUID uuidOfPlayer3=UUID.fromString(player3.get("uuid").toString());
+			
+			player1=testBoard.rollDice(uuidOfPlayer1);
+			player3=testBoard.rollDice(uuidOfPlayer3);
+		/*}
+		catch(InvalidTurnException exp){
+			JSONObject player2=(JSONObject)players.get(1);
+			UUID uuidOfPlayer2=UUID.fromString(player2.get("uuid").toString());
+			Assert.assertEquals(exp, new InvalidTurnException(uuidOfPlayer2));
+		}*/
+		//System.out.println(players);
+		
+		
+		
+	}
+	
+	public void testLadderOrientation() throws FileNotFoundException, UnsupportedEncodingException, IOException{
+		Board testBoard=new Board();
+		JSONObject data=testBoard.getData();
+		JSONArray steps=data.getJSONArray("steps");
+	    JSONArray stepWithLadder=null;
+	    for(Object object : steps){
+	    	JSONObject step=(JSONObject)object;
+	    	if(Integer.parseInt(step.get("type").toString())==2){
+	    		int number=Integer.parseInt(step.get("number").toString());
+	    		
+	    	}
+	    }
+	}
+	
+	/**
+	 * test whether player moved to the target position if bitten by snake
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 * @throws IOException
+	 * @throws PlayerExistsException
+	 * @throws GameInProgressException
+	 * @throws MaxPlayersReachedExeption
+	 * @throws JSONException
+	 * @throws InvalidTurnException
+	 */
 	@Test
-	public void test1(){
-				
+	public void testSnakeBite() throws FileNotFoundException, UnsupportedEncodingException, IOException, PlayerExistsException, GameInProgressException, MaxPlayersReachedExeption, JSONException, InvalidTurnException{
+		/*Board testBoard=Mockito.mock(Board.class);
+		Mockito.when((new Random()).nextInt(6)+1).then();*/
+		
+		
+		
+		UUID uuid=UUID.randomUUID();
+		BoardService2.init(uuid);
+		Board customizeBoard=new Board(uuid);
+		JSONArray players=customizeBoard.registerPlayer("player");
+		JSONObject data=customizeBoard.getData();  
+		JSONArray steps=(JSONArray) data.get("steps");
+		players=customizeBoard.getPlayersList();
+		JSONObject player=(JSONObject) players.get(0);
+		player.put("position", 22);
+		//System.out.println("players : "+players);
+		JSONObject playerBitten=customizeBoard.rollDice(UUID.fromString(player.get("uuid").toString()));  
+		 int dice=Integer.parseInt(playerBitten.get("dice").toString());
+
+		     int playerPosition=Integer.parseInt(player.get("position").toString());
+		    JSONObject step=(JSONObject) steps.get(playerPosition);
+		    int expectedTarget=Integer.parseInt(step.get("target").toString());
+		    int actualTarget=Integer.parseInt(playerBitten.get("message").toString().substring(playerBitten.get("message").toString().lastIndexOf(' ')).trim());
+		    Assert.assertEquals(expectedTarget,actualTarget);
+		
+		/*int playerPosition=Integer.parseInt(player.get("position").toString());
+	    JSONObject step=(JSONObject) steps.get(dice+playerPosition);
+	    int expectedTarget=Integer.parseInt(step.get("target").toString());
+	    int actualTarget=Integer.parseInt(playerBitten.get("message").toString().substring(playerBitten.get("message").toString().lastIndexOf(' ')).trim());
+	    System.out.println("player : "+player +"dice : "+dice+ "STEP : "+step+ "bitten : "+playerBitten +" exptarget : "+expectedTarget +" actualTarget : "+actualTarget);*/
+		   
+		   // System.out.println("player : "+player +"dice : "+dice+ "STEP : "+step+ "bitten : "+playerBitten +" exptarget : "+expectedTarget +" actualTarget : "+actualTarget);
+		
+		
+	}
+	
+	/**
+	 * test board whether it is initialized or not
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 * @throws IOException
+	 */
+	@Test
+	public void testBoardInitialized() throws FileNotFoundException, UnsupportedEncodingException, IOException{
+		
+		Board board=new Board();
+		Assert.assertNotEquals(board.getData(), (null));
+		
+	}
+	
+	/**
+	 * whether snake exists in the beginning.
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 * @throws IOException
+	 */
+	@Test
+	public void testSnakeAtBegining() throws FileNotFoundException, UnsupportedEncodingException, IOException{
+		Board board=new Board();
+		JSONArray steps=(JSONArray) board.getData().get("steps");
+		JSONObject firstStep=(JSONObject) steps.get(0);
+		
+		Assert.assertNotEquals(Integer.parseInt(firstStep.get("type").toString()), 1);
+	}
+	/**
+	 * validating last step should not have a snake or a ladder.
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 * @throws IOException
+	 */
+	@Test
+	public void testLadderOrSnakeAtFinish() throws FileNotFoundException, UnsupportedEncodingException, IOException{
+		Board board=new Board();
+		JSONArray steps=(JSONArray) board.getData().get("steps");
+		JSONObject lastStep=(JSONObject) steps.get(100);
+		int type=Integer.parseInt(lastStep.get("type").toString());
+		
+		Assert.assertTrue(type!=1 && type!=2);
 		
 	}
 	
 	
+	public void testDiceRolling() throws FileNotFoundException, UnsupportedEncodingException, IOException{
+	
+		
+		
+	}
+	
+	/**
+	 * validating FileNotFoundException
+	 * @throws IOException
+	 */
+	@Test(expectedExceptions=NoSuchFileException.class)
+	public void testFileNotFoundException() throws IOException{
+		UUID uuid=UUID.randomUUID();
+		Board testBoard=new Board(uuid);
+		/*try {
+			Board testBoard=new Board(uuid);
+		} catch (IOException e) {
+			Assert.assertEquals(e.getMessage(), (new NoSuchFileException(uuid.toString())).getMessage());
+		}*/
+	}
 
 }

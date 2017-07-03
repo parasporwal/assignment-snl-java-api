@@ -5,7 +5,7 @@
     <classes>
       <class name="com.qainfotech.tap.training.snl.api.BoardTest">
         <methods>
-          <include name="IsPlayerClimbLadder"/>
+          <include name="testFileNotFoundException"/>
         </methods>
       </class> <!-- com.qainfotech.tap.training.snl.api.BoardTest -->
     </classes>
