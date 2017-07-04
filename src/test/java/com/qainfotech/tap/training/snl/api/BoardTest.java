@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -216,16 +217,59 @@ public class BoardTest {
 		
 		
 	}
-	
+	/**
+	 * validating ladder must have target bigger than current position
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 * @throws IOException
+	 */
+	@Test
 	public void testLadderOrientation() throws FileNotFoundException, UnsupportedEncodingException, IOException{
-		Board testBoard=new Board();
-		JSONObject data=testBoard.getData();
+		//Board testBoard=new Board();
+		UUID uuid=UUID.randomUUID();
+		WrongBoardStructure.init(uuid);
+		Board invalidBoard=new Board(uuid);
+		JSONObject data=invalidBoard.getData();
 		JSONArray steps=data.getJSONArray("steps");
-	    JSONArray stepWithLadder=null;
-	    for(Object object : steps){
+	 	    for(Object object : steps){
 	    	JSONObject step=(JSONObject)object;
 	    	if(Integer.parseInt(step.get("type").toString())==2){
+	    		System.out.println(step);
 	    		int number=Integer.parseInt(step.get("number").toString());
+	    		int target=Integer.parseInt(step.get("target").toString());
+	    		
+	    		int tenth_digit=number/10;
+	    		System.out.println("number : "+number +" tenth_digit : "+tenth_digit);
+	    		switch(tenth_digit){
+	    		 
+	    		case 0: 
+	    			   Assert.assertTrue(target>10);
+	    			   break;
+	    		case 1: 
+	    			   Assert.assertTrue(target>20);
+	    			   break;
+	    		case 2: 
+	    			   Assert.assertTrue(target>30);
+	    			   break;
+	    		case 4: 
+	    			   Assert.assertTrue(target>40);
+	    			   break;
+	    		case 5: 
+	    			   Assert.assertTrue(target>50);
+	    			   break;
+	    		case 6: 
+	    			   Assert.assertTrue(target>60);
+	    			   break;
+	    		case 7: 
+	    			   Assert.assertTrue(target>70);
+	    			   break;
+	    		case 8: 
+	    			   Assert.assertTrue(target>80);
+	    			   break;
+	    		case 9:
+	    			   System.out.println("problem");
+	    			   break;
+	    		}
 	    		
 	    	}
 	    }

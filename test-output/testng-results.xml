@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="9" total="10" passed="1">
+<testng-results skipped="0" failed="1" ignored="10" total="11" passed="0">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="39" started-at="2017-07-03T07:32:23Z" finished-at="2017-07-03T07:32:23Z">
+  <suite name="Default suite" duration-ms="56" started-at="2017-07-04T06:52:03Z" finished-at="2017-07-04T06:52:03Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="39" started-at="2017-07-03T07:32:23Z" finished-at="2017-07-03T07:32:23Z">
+    <test name="Default test" duration-ms="56" started-at="2017-07-04T06:52:03Z" finished-at="2017-07-04T06:52:03Z">
       <class name="com.qainfotech.tap.training.snl.api.BoardTest">
-        <test-method status="PASS" signature="testFileNotFoundException()[pri:0, instance:com.qainfotech.tap.training.snl.api.BoardTest@3c756e4d]" name="testFileNotFoundException" duration-ms="18" started-at="2017-07-03T13:02:23Z" finished-at="2017-07-03T13:02:23Z">
-          <exception class="java.nio.file.NoSuchFileException">
+        <test-method status="FAIL" signature="testLadderOrientation()[pri:0, instance:com.qainfotech.tap.training.snl.api.BoardTest@3c756e4d]" name="testLadderOrientation" duration-ms="37" started-at="2017-07-04T12:22:03Z" finished-at="2017-07-04T12:22:03Z">
+          <exception class="java.lang.AssertionError">
             <message>
-              <![CDATA[2a32ea1a-9285-4761-8d76-0e28983e35dc.board]]>
+              <![CDATA[expected [true] but found [false]]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.nio.file.NoSuchFileException: 2a32ea1a-9285-4761-8d76-0e28983e35dc.board
-	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:79)
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:97)
-	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:102)
-	at sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:230)
-	at java.nio.file.Files.newByteChannel(Files.java:361)
-	at java.nio.file.Files.newByteChannel(Files.java:407)
-	at java.nio.file.Files.readAllBytes(Files.java:3152)
-	at com.qainfotech.tap.training.snl.api.BoardModel.data(BoardModel.java:63)
-	at com.qainfotech.tap.training.snl.api.Board.<init>(Board.java:44)
-	at com.qainfotech.tap.training.snl.api.BoardTest.testFileNotFoundException(BoardTest.java:337)
+              <![CDATA[java.lang.AssertionError: expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:94)
+	at org.testng.Assert.failNotEquals(Assert.java:513)
+	at org.testng.Assert.assertTrue(Assert.java:42)
+	at org.testng.Assert.assertTrue(Assert.java:52)
+	at com.qainfotech.tap.training.snl.api.BoardTest.testLadderOrientation(BoardTest.java:253)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -51,10 +46,10 @@
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.nio.file.NoSuchFileException -->
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testFileNotFoundException -->
+        </test-method> <!-- testLadderOrientation -->
       </class> <!-- com.qainfotech.tap.training.snl.api.BoardTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
